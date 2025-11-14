@@ -1,10 +1,7 @@
 using Plots
 using LinearAlgebra
 using Arpack
-
-include("basisCreation.jl")
-include("ManyBodyHamiltonian.jl")
-include("LLLInteractionAndConfinementHamiltonians.jl")
+using ProgressMeter
 
 """
     compute_spectrum_vs_M(mMin::Int, mMax::Int, N::Int, 
@@ -56,7 +53,7 @@ function compute_spectrum_vs_M(mMin::Int, mMax::Int, N::Int,
     all_energies = Vector{Vector{Float64}}()
 
     # Loop over all possible M values
-    for M in M_min:M_max
+    @showprogress 1 "Computing M values..." for M in M_min:M_max
         # Create basis for this M sector
         basis = FermionicBasis(N, M, mMin, mMax)
 
